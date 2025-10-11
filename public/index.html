@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Records - Stripes Interiors</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Stripes Interiors - Order Records</h1>
+
+    <!-- ✅ Add New Order Form -->
+    <form id="orderForm">
+      <h2>Add / Edit Order</h2>
+      <div class="grid">
+        <input type="hidden" id="orderId" />
+        <input type="text" id="po_no" placeholder="PO No (Unique)" required />
+        <input type="date" id="po_date" required />
+        <input type="text" id="client_name" placeholder="Client Name" required />
+        <textarea id="product_details" placeholder="Product Details (e.g., Tray x2, Mirror x1)" required></textarea>
+        <input type="number" id="qty" placeholder="Qty" required />
+        <select id="dispatch_status">
+          <option value="Pending">Pending</option>
+          <option value="Dispatched">Dispatched</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+        <input type="text" id="invoice_no" placeholder="Invoice No" />
+        <input type="date" id="invoice_date" />
+        <input type="number" id="invoice_amount" placeholder="Invoice Amount" />
+        <select id="payment_status">
+          <option value="Pending">Pending</option>
+          <option value="Received">Received</option>
+        </select>
+      </div>
+      <button type="submit">💾 Save Order</button>
+    </form>
+
+    <!-- 🔍 Filters -->
+    <div class="filters">
+      <h2>Filter / Search</h2>
+      <input type="text" id="search" placeholder="Search by PO or Client" />
+      <select id="filter_status">
+        <option value="">All Dispatch Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Dispatched">Dispatched</option>
+        <option value="Delivered">Delivered</option>
+      </select>
+      <select id="filter_payment">
+        <option value="">All Payment Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Received">Received</option>
+      </select>
+      <input type="date" id="startDate" />
+      <input type="date" id="endDate" />
+      <button id="applyFilters">Apply Filters</button>
+      <button id="clearFilters">Clear</button>
+    </div>
+
+    <!-- 📋 Orders Table -->
+    <h2>All Orders</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Sr. No</th>
+          <th>PO No</th>
+          <th>PO Date</th>
+          <th>Client Name</th>
+          <th>Product Details</th>
+          <th>Qty</th>
+          <th>Dispatch/Delivered</th>
+          <th>Invoice No</th>
+          <th>Invoice Date</th>
+          <th>Invoice Amount</th>
+          <th>Payment Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="orderTableBody"></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
