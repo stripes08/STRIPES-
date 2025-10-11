@@ -1,0 +1,100 @@
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #222;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+}
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+input, select, button {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #0056b3;
+}
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+th {
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+tr:hover {
+  background: #f1f1f1;
+}
+.action-buttons button {
+  margin: 2px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.add-product-btn {
+  background: #28a745;
+  color: white;
+}
+.add-product-btn:hover {
+  background: #1e7e34;
+}
+.delete-product-btn {
+  background: #dc3545;
+  color: white;
+}
+.delete-product-btn:hover {
+  background: #b02a37;
+}
+footer {
+  text-align: center;
+  color: #888;
+  padding: 15px;
+  font-size: 14px;
+}

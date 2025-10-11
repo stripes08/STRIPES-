@@ -1,0 +1,71 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Order Records v2 (Dummy)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>Order Records v2</h1></header>
+  <div class="container">
+    <div class="top">
+      <div class="card" id="summary">Loading summary...</div>
+      <div class="card">
+        <button id="exportBtn">Export CSV</button>
+        <input type="file" id="importFile" accept=".csv" />
+        <button id="importBtn">Import CSV</button>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Add Order</h3>
+      <form id="orderForm">
+        <input name="sr_no" placeholder="Sr. No." />
+        <input name="po_no" placeholder="PO No." />
+        <input name="po_date" type="date" />
+        <input name="client_name" placeholder="Client Name" style="width:60%" />
+        <div id="productContainer"><h4>Products</h4></div>
+        <button type="button" id="addProductBtn" class="add-product-btn">+ Add product</button>
+        <div>
+          <input name="dispatch_status" placeholder="Dispatch/Delivered" />
+          <input name="invoice_no" placeholder="Invoice No." />
+          <input name="invoice_date" type="date" />
+          <input name="invoice_amount" placeholder="Invoice Amount" />
+          <input name="payment_status" placeholder="Payment Status & Date" />
+        </div>
+        <div style="margin-top:8px"><button type="submit">Add Order</button></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Orders</h3>
+      <input id="search" placeholder="Search PO No. or Client" style="width:40%;padding:6px;margin-bottom:8px" />
+      <div class="table-container">
+      <table id="ordersTable" aria-label="orders">
+        <thead>
+          <tr>
+            <th data-key="sr_no">Sr. No.</th>
+            <th data-key="po_no">PO No.</th>
+            <th data-key="po_date">PO Date</th>
+            <th data-key="client_name">Client Name</th>
+            <th>Products</th>
+            <th data-key="qty_total">Qty Total</th>
+            <th data-key="dispatch_status">Dispatch</th>
+            <th data-key="invoice_no">Invoice No</th>
+            <th data-key="invoice_date">Invoice Date</th>
+            <th data-key="invoice_amount">Invoice Amount</th>
+            <th data-key="payment_status">Payment Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>
