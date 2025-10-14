@@ -1,61 +1,134 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const tableBody = document.querySelector("#orderTableBody");
+// public/script.js
+document.addEventListener('DOMContentLoaded', () => {
+  const orderForm = document.getElementById('order-form');
+  const ordersTableBody = document.querySelector('#orders-table tbody');
+  const addProductBtn = document.getElementById('add-product');
+  const exportBtn = document.getElementById('export-btn');
+  const importInput = document.getElementById('import-csv');
+  const searchInput = document.getElementById('search');
 
-  // ✅ Fetch and display orders
+  let editingOrderId = null;
+
+  // Fetch and display orders
   async function loadOrders() {
-    const res = await fetch("/orders");
+    const res = await fetch('/api/orders');
     const orders = await res.json();
+    renderOrders(orders);
+  }
 
-    tableBody.innerHTML = "";
-    orders.forEach(order => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${order.order_no}</td>
-        <td>${order.order_date}</td>
-        <td>${order.company_name}</td>
-        <td>${order.remark}</td>
-        <td>${order.ready_status}</td>
-        <td>${order.delivery_status}</td>
+  // Render orders into table
+  function renderOrders(orders) {
+    ordersTableBody.innerHTML = '';
+    orders.forEach((order, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i + 1}</td>
+        <td>${order.po_no}</td>
+        <td>${order.po_date}</td>
+        <td>${order.client_name}</td>
+        <td>${order.product_details}</td>
+        <td>${order.qty}</td>
+        <td>${order.dispatch_status}</td>
+        <td>${order.invoice_no}</td>
+        <td>${order.invoice_date}</td>
+        <td>${order.invoice_amount}</td>
         <td>${order.payment_status}</td>
         <td>
           <button class="edit-btn" data-id="${order.id}">Edit</button>
           <button class="delete-btn" data-id="${order.id}">Delete</button>
         </td>
       `;
-      tableBody.appendChild(row);
-    });
-
-    attachEventListeners();
-  }
-
-  // ✅ Edit button logic
-  function attachEventListeners() {
-    document.querySelectorAll(".edit-btn").forEach(button => {
-      button.addEventListener("click", async () => {
-        const id = button.dataset.id;
-        const newRemark = prompt("Enter updated remark:");
-        if (newRemark) {
-          const res = await fetch(`/update/${id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ remark: newRemark })
-          });
-          if (res.ok) loadOrders();
-        }
-      });
-    });
-
-    // ✅ Delete button logic
-    document.querySelectorAll(".delete-btn").forEach(button => {
-      button.addEventListener("click", async () => {
-        const id = button.dataset.id;
-        if (confirm("Are you sure you want to delete this order?")) {
-          const res = await fetch(`/delete/${id}`, { method: "DELETE" });
-          if (res.ok) loadOrders();
-        }
-      });
+      ordersTableBody.appendChild(tr);
     });
   }
 
-  await loadOrders();
+  // Add or update order
+  orderForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(orderForm);
+    const data = Object.fromEntries(formData.entries());
+
+    const url = editingOrderId ? `/api/orders/${editingOrderId}` : '/api/orders';
+    const method = editingOrderId ? 'PUT' : 'POST';
+
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      alert(editingOrderId ? 'Order updated!' : 'Order added!');
+      orderForm.reset();
+      editingOrderId = null;
+      loadOrders();
+    } else {
+      alert('Failed to save order');
+    }
+  });
+
+  // Handle edit/delete buttons
+  ordersTableBody.addEventListener('click', async (e) => {
+    const id = e.target.dataset.id;
+    if (e.target.classList.contains('delete-btn')) {
+      if (confirm('Are you sure you want to delete this order?')) {
+        await fetch(`/api/orders/${id}`, { method: 'DELETE' });
+        loadOrders();
+      }
+    }
+
+    if (e.target.classList.contains('edit-btn')) {
+      const res = await fetch(`/api/orders/${id}`);
+      const order = await res.json();
+      for (let key in order) {
+        if (orderForm[key]) orderForm[key].value = order[key];
+      }
+      editingOrderId = id;
+    }
+  });
+
+  // CSV Export
+  exportBtn.addEventListener('click', async () => {
+    const res = await fetch('/api/export');
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'orders.csv';
+    a.click();
+  });
+
+  // CSV Import
+  importInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const res = await fetch('/api/import', {
+      method: 'POST',
+      body: formData,
+    });
+    if (res.ok) {
+      alert('CSV imported successfully!');
+      loadOrders();
+    } else {
+      alert('Failed to import CSV.');
+    }
+  });
+
+  // Search feature
+  searchInput.addEventListener('input', async () => {
+    const query = searchInput.value.toLowerCase();
+    const res = await fetch('/api/orders');
+    const orders = await res.json();
+    const filtered = orders.filter(o =>
+      o.po_no.toLowerCase().includes(query) ||
+      o.client_name.toLowerCase().includes(query)
+    );
+    renderOrders(filtered);
+  });
+
+  // Load on start
+  loadOrders();
 });
