@@ -6,8 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const exportBtn = document.getElementById('export-btn');
   const importInput = document.getElementById('import-csv');
   const searchInput = document.getElementById('search');
+  const dispatchModal = document.getElementById('dispatch-modal');
+  const dispatchList = document.getElementById('dispatch-list');
+  const saveDispatchBtn = document.getElementById('save-dispatch');
 
   let editingOrderId = null;
+  let currentDispatchOrder = null;
 
   // Fetch and display orders
   async function loadOrders() {
@@ -29,13 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${order.product_details}</td>
         <td>${order.qty}</td>
         <td>${order.dispatch_status}</td>
-        <td>${order.invoice_no}</td>
-        <td>${order.invoice_date}</td>
-        <td>${order.invoice_amount}</td>
-        <td>${order.payment_status}</td>
+        <td>${order.invoice_no || ''}</td>
+        <td>${order.invoice_date || ''}</td>
+        <td>${order.invoice_amount || ''}</td>
+        <td>${order.payment_status || ''}</td>
         <td>
           <button class="edit-btn" data-id="${order.id}">Edit</button>
           <button class="delete-btn" data-id="${order.id}">Delete</button>
+          <button class="dispatch-btn" data-id="${order.id}">Dispatch</button>
         </td>
       `;
       ordersTableBody.appendChild(tr);
@@ -68,9 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Handle edit/delete buttons
+  // Handle edit/delete/dispatch buttons
   ordersTableBody.addEventListener('click', async (e) => {
     const id = e.target.dataset.id;
+
     if (e.target.classList.contains('delete-btn')) {
       if (confirm('Are you sure you want to delete this order?')) {
         await fetch(`/api/orders/${id}`, { method: 'DELETE' });
@@ -85,6 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (orderForm[key]) orderForm[key].value = order[key];
       }
       editingOrderId = id;
+    }
+
+    if (e.target.classList.contains('dispatch-btn')) {
+      const res = await fetch(`/api/orders/${id}`);
+      const order = await res.json();
+      currentDispatchOrder = order;
+      openDispatchModal(order);
     }
   });
 
@@ -117,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Search feature
+  // Search
   searchInput.addEventListener('input', async () => {
     const query = searchInput.value.toLowerCase();
     const res = await fetch('/api/orders');
@@ -129,6 +142,49 @@ document.addEventListener('DOMContentLoaded', () => {
     renderOrders(filtered);
   });
 
-  // Load on start
+  // Dispatch modal functions
+  function openDispatchModal(order) {
+    dispatchList.innerHTML = '';
+    const products = order.product_details.split(';').map(p => p.trim());
+    products.forEach(prod => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <label>
+          <input type="checkbox" class="dispatch-item">
+          ${prod}
+        </label>
+      `;
+      dispatchList.appendChild(li);
+    });
+    dispatchModal.style.display = 'block';
+  }
+
+  saveDispatchBtn.addEventListener('click', async () => {
+    const checkboxes = document.querySelectorAll('.dispatch-item');
+    const total = checkboxes.length;
+    const checked = [...checkboxes].filter(cb => cb.checked).length;
+
+    let status = 'Pending';
+    if (checked === total) status = 'Delivered';
+    else if (checked > 0) status = 'Partially Delivered';
+
+    currentDispatchOrder.dispatch_status = status;
+
+    await fetch(`/api/orders/${currentDispatchOrder.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentDispatchOrder),
+    });
+
+    alert('Dispatch status updated!');
+    dispatchModal.style.display = 'none';
+    loadOrders();
+  });
+
+  // Close modal on outside click
+  window.addEventListener('click', (e) => {
+    if (e.target === dispatchModal) dispatchModal.style.display = 'none';
+  });
+
   loadOrders();
 });
