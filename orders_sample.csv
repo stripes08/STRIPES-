@@ -1,0 +1,11 @@
+order_number,order_date,company_name,order_remark,ready_status,delivery_status,payment_status
+1001,2025-09-01,Taj Hotels,4 marble trays + 2 soap dispensers,Ready,Delivered,Received
+1002,2025-09-03,Oberoi Hotels,3 glass jars,In Progress,Pending,Pending
+1003,2025-09-05,ITC Maurya,5 bone trays,Ready,Delivered,Received
+1004,2025-09-07,Leela Palace,2 soap sets + 1 tissue box,Pending,Pending,Pending
+1005,2025-09-10,Trident,3 candle stands,Ready,Pending,Pending
+1006,2025-09-12,Marriott,10 diffusers,In Progress,Pending,Received
+1007,2025-09-14,Hyatt Regency,6 trays + 4 jars,Ready,Delivered,Received
+1008,2025-09-15,Radisson Blu,2 soap dispensers,Pending,Pending,Pending
+1009,2025-09-17,The Claridges,8 aroma sets,Ready,Delivered,Pending
+1010,2025-09-18,The Lalit,4 coasters + 3 soap sets,In Progress,Pending,Received
