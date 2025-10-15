@@ -1,1 +1,0 @@
-Stripes Order Management System - deploy instructions:\n1. npm install\n2. node server.js\nApp URL: http://localhost:3000/\nDefault: no auth required. Change code to add authentication if needed.\n
