@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Stripes Order Management System</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="title-wrap">
+        <h1 class="title">Stripes Order Management System</h1>
+        <div class="subtitle small">Manage POs • Partial Dispatch • Payments • CSV Import/Export</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <section class="card form">
+        <h3>Add / Edit Order</h3>
+        <form id="orderForm">
+          <label class="small">PO Number</label>
+          <input name="po_no" placeholder="PO No (unique)" required>
+          <label class="small">PO Date</label>
+          <input name="po_date" type="date">
+          <label class="small">Client / Company</label>
+          <input name="client_name" placeholder="Client name">
+          <label class="small">Products (format: Item xQty; Item2 xQty)</label>
+          <textarea name="product_details" rows="3" placeholder="LEATHERITE Case x30; Charger x10"></textarea>
+          <label class="small">Total Qty</label>
+          <input name="qty" type="number" placeholder="Total qty">
+          <label class="small">Dispatch Status</label>
+          <select name="dispatch_status"><option>Pending</option><option>Partial</option><option>Delivered</option></select>
+          <label class="small">Invoice No / Date / Amount</label>
+          <div style="display:flex;gap:6px">
+            <input name="invoice_no" placeholder="INV-000" style="flex:1">
+            <input name="invoice_date" type="date" style="flex:1">
+            <input name="invoice_amount" type="number" placeholder="Amount" style="width:120px">
+          </div>
+          <label class="small">Payment Status</label>
+          <select name="payment_status"><option>Pending</option><option>Received</option></select>
+          <label class="small">Delivered Items (semicolon separated)</label>
+          <input name="delivered_items" placeholder="Item A; Item B">
+          <label class="small">Undelivered Items (semicolon separated)</label>
+          <input name="undelivered_items" placeholder="Item C; Item D">
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" type="submit" id="saveBtn">Save Order</button>
+            <button type="button" id="clearBtn">Clear</button>
+          </div>
+        </form>
+        <div class="small" style="margin-top:10px">Tip: Use format <code>Item xQty; Item2 xQty</code> for multiple products.</div>
+      </section>
+
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>Orders</h3>
+          <div class="small">Total Orders: <span id="count">0</span></div>
+        </div>
+
+        <div class="controls" style="margin:8px 0">
+          <input id="search" placeholder="Search PO / client / product" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eef6">
+          <input type="file" id="importFile" accept=".csv">
+          <button class="btn" id="importBtn">Import CSV</button>
+          <button class="btn" id="exportBtn">Export CSV</button>
+          <button class="btn" id="refreshBtn">Refresh</button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="ordersTable">
+            <thead>
+              <tr><th>Sr</th><th>PO No</th><th>PO Date</th><th>Client</th><th>Products</th><th>Qty</th><th>Dispatch</th><th>Invoice</th><th>Amt</th><th>Payment</th><th>Delivered</th><th>Undelivered</th><th>Actions</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer small">Built for Stripes Interiors • Keep your data backed up. Want multi-user? Ask me.</div>
+  </main>
+
+  <!-- Dispatch modal -->
+  <div id="dispatch-modal" class="modal">
+    <div class="box">
+      <h3>Dispatch — mark delivered items</h3>
+      <div id="dispatch-info" class="small" style="margin-bottom:8px"></div>
+      <ul id="dispatch-list" style="list-style:none;padding:0;margin:0 0 8px 0"></ul>
+      <div style="text-align:right;display:flex;gap:8px;justify-content:flex-end">
+        <button id="dispatchSave" class="btn">Save</button>
+        <button id="dispatchClose">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
