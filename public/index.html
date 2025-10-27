@@ -1,0 +1,50 @@
+
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stripes Interiors - Order Manager</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><h1 style="margin:0;padding:10px">Stripes Interiors — Order Manager<small>Order Records & Dispatch</small></h1></header>
+<div class="container">
+  <div class="card">
+    <form id="orderForm">
+      <h3>Add / Edit Order</h3>
+      <input name="po_no" placeholder="PO No (unique)" required><br>
+      <input name="po_date" type="date"><br>
+      <input name="client_name" placeholder="Client name"><br>
+      <textarea name="product_details" placeholder="Product Details (Item xQty; Item2 xQty)"></textarea><br>
+      <input name="qty" type="number" placeholder="Total Qty"><br>
+      <select name="dispatch_status"><option>Pending</option><option>Partial</option><option>Delivered</option></select>
+      <input name="invoice_no" placeholder="Invoice No">
+      <input name="invoice_date" type="date">
+      <input name="invoice_amount" placeholder="Invoice Amount" type="number">
+      <select name="payment_status"><option>Pending</option><option>Received</option></select><br>
+      <input name="delivered_items" placeholder="Delivered items (semicolon separated)"><br>
+      <input name="undelivered_items" placeholder="Undelivered items (semicolon separated)"><br>
+      <div><button id="saveBtn" type="submit">Save</button> <button id="clearBtn" type="button">Clear</button></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;gap:8px;align-items:center">
+      <input id="search" placeholder="Search PO / client / product" style="flex:1">
+      <input type="file" id="fileInput" accept=".csv">
+      <button id="importBtn">Import CSV</button>
+      <button id="exportBtn">Export CSV</button>
+      <button id="refreshBtn">Refresh</button>
+    </div>
+
+    <table id="ordersTable">
+      <thead>
+        <tr><th>Sr</th><th>PO No</th><th>PO Date</th><th>Client</th><th>Products</th><th>Qty</th><th>Dispatch</th><th>Invoice</th><th>Amount</th><th>Payment</th><th>Delivered</th><th>Undelivered</th><th>Actions</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="dispatch-modal"><div class="box"><h3>Dispatch</h3><div id="dispatch-info"></div><ul id="dispatch-list" style="list-style:none;padding:0"></ul><div style="text-align:right"><button id="dispatchSave">Save</button><button id="dispatchClose">Close</button></div></div></div>
+
+<footer>Stripes Interiors — Built for business</footer>
+<script src="script.js"></script>
+</body>
+</html>

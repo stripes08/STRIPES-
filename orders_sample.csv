@@ -1,0 +1,13 @@
+po_no,po_date,client_name,product_details,qty,dispatch_status,invoice_no,invoice_date,invoice_amount,payment_status
+PO-4001,2025-06-01,Taj Hotels,LEATHERITE I POD CASE x30,30,Delivered,INV-4001,2025-06-05,25500,Received
+PO-4002,2025-06-03,The Oberoi,Glass Jar x3; Mirror x1,4,Pending,INV-4002,2025-06-07,8900,Pending
+PO-4003,2025-06-05,ITC Maurya,Bone Tray x5,5,Delivered,INV-4003,2025-06-09,7200,Received
+PO-4004,2025-06-07,Leela Palace,Soap Set x2; Tissue Box x1,3,Pending,INV-4004,2025-06-12,6800,Pending
+PO-4005,2025-06-10,Trident,Candle Stand x3,3,Partial,INV-4005,2025-06-13,9200,Pending
+PO-4006,2025-06-12,Marriott,Diffuser x10,10,Pending,INV-4006,2025-06-15,4800,Received
+PO-4007,2025-06-14,Hyatt Regency,Tray x6; Jar x4,10,Delivered,INV-4007,2025-06-17,5600,Received
+PO-4008,2025-06-15,Radisson Blu,Soap Dispenser x2,2,Pending,INV-4008,2025-06-18,6400,Pending
+PO-4009,2025-06-17,The Claridges,Aroma Set x8,8,Delivered,INV-4009,2025-06-20,7300,Pending
+PO-4010,2025-06-18,The Lalit,Coaster x4; Soap Set x3,7,Partial,INV-4010,2025-06-21,6900,Received
+PO-4011,2025-06-20,Crowne Plaza,Metal Stands x3,3,Pending,INV-4011,2025-06-23,4100,Pending
+PO-4012,2025-06-22,Le Meridien,Marble Trays x5,5,Delivered,INV-4012,2025-06-25,13200,Received
