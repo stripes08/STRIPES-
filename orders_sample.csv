@@ -1,2 +1,0 @@
-po_no,po_date,client_name,product_details,qty,dispatch_status,invoice_no,invoice_date,invoice_amount,payment_status
-PO-V2-013,2025-08-25,New Hotel,Sample Item x2,2,Pending,INV-V2-013,2025-08-27,1500,Pending
