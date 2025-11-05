@@ -1,0 +1,1 @@
+Stripes Mark One - Quickstart\n1. npm install\n2. node server.js\n3. Open http://localhost:10000\nKeep orders.db to preserve data.
